@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.factfinder</groupId>
+	<artifactId>fff-ws-runner</artifactId>
+	<version>6.9.1.0</version>
+	
+	<dependencies>
+		<dependency>
+			<groupId>de.factfinder</groupId>
+			<artifactId>fff-ws-client</artifactId>
+			<version>6.9.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+	</dependencies>
+	
+	<repositories>
+		<repository>
+			<!-- Internal maven repository of Omikron Data Quality GmbH. 
+				It's only needed to receive the fff-ws-client dependency, 
+				which can either be created on your own or requested from your Omikron contact.
+			-->		
+			<id>internal.repository</id>
+			<name>Internal Repository</name>
+			<url>http://mavenrepo/repository/omikron/</url>
+		</repository>
+	</repositories>
+</project>
