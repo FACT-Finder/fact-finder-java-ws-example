@@ -2,13 +2,13 @@ package de.factfinder.runner.print;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.wsclient.ws69.Record;
-import de.factfinder.wsclient.ws69.campaign.Answer;
-import de.factfinder.wsclient.ws69.campaign.Campaign;
-import de.factfinder.wsclient.ws69.campaign.CampaignFlavour;
-import de.factfinder.wsclient.ws69.campaign.FeedbackText;
-import de.factfinder.wsclient.ws69.campaign.Question;
-import de.factfinder.wsclient.ws69.campaign.Target;
+import de.factfinder.wsclient.ws610.Record;
+import de.factfinder.wsclient.ws610.campaign.Answer;
+import de.factfinder.wsclient.ws610.campaign.Campaign;
+import de.factfinder.wsclient.ws610.campaign.CampaignFlavour;
+import de.factfinder.wsclient.ws610.campaign.FeedbackText;
+import de.factfinder.wsclient.ws610.campaign.Question;
+import de.factfinder.wsclient.ws610.campaign.Target;
 
 /**
  * Prints information about campaigns.

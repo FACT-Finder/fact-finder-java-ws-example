@@ -2,8 +2,8 @@ package de.factfinder.runner;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import de.factfinder.wsclient.ws69.AuthenticationToken;
-import de.factfinder.wsclient.ws69.tracking.UserInformation;
+import de.factfinder.wsclient.ws610.AuthenticationToken;
+import de.factfinder.wsclient.ws610.tracking.TrackingInformation;
 
 /**
  * This class manages the {@linkplain AuthenticationToken} , channel and the webservice url.
@@ -13,7 +13,7 @@ public final class Settings {
 	/**
 	 * Base URL of the FACT-Finder environment.
 	 */
-	protected static final String		BASEURL				= "http://localhost:8080/FACT-Finder6.9";
+	protected static final String		BASEURL				= "http://localhost:8080/FACT-Finder6.10";
 	private static final String			CHANNEL				= "de";
 
 	// authentication settings for requests
@@ -26,8 +26,6 @@ public final class Settings {
 	private static AuthenticationToken	authToken			= null;
 	private static final String			SITE				= "demoshop";
 	private static final String			SESSION_ID			= "sid12345";
-	private static final String			SHOP_USER			= "demoUser";
-	private static final String			COOKIE_ID			= "cookie";
 
 	private Settings() {
 	}
@@ -52,12 +50,10 @@ public final class Settings {
 		return authToken;
 	}
 
-	protected static UserInformation getUserInformation() {
-		final UserInformation userInformation = new UserInformation();
-		userInformation.setCookieID(COOKIE_ID);
+	protected static TrackingInformation getTrackingInformation() {
+		final TrackingInformation userInformation = new TrackingInformation();
 		userInformation.setSite(SITE);
 		userInformation.setSessionID(SESSION_ID);
-		userInformation.setUserID(SHOP_USER);
 		return userInformation;
 	}
 

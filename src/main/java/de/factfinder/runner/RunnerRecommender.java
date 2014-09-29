@@ -4,18 +4,16 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.wsclient.ws69.AuthenticationToken;
-import de.factfinder.wsclient.ws69.Record;
-import de.factfinder.adapters.wsclient.ws69.RecommenderPortTypeProxy;
-import de.factfinder.wsclient.ws69.tracking.UserInformation;
+import de.factfinder.adapters.wsclient.ws610.RecommenderPortTypeProxy;
+import de.factfinder.wsclient.ws610.AuthenticationToken;
+import de.factfinder.wsclient.ws610.Record;
 
 public class RunnerRecommender {
-	private static final Logger				LOG					= Logger.getLogger(RunnerRecommender.class.getCanonicalName());
-	private static final String				PRODUCT_ID			= "249602";
-	private static final int				MAX_RETURN_RECORDS	= 30;
-	private static final UserInformation	USER_INFORMATION	= null;
-	private static final String				CHANNEL				= "de";
-	private static final boolean			IDS_ONLY			= false;
+	private static final Logger		LOG					= Logger.getLogger(RunnerRecommender.class.getCanonicalName());
+	private static final String		PRODUCT_ID			= "233450";
+	private static final int		MAX_RETURN_RECORDS	= 30;
+	private static final String		CHANNEL				= "de";
+	private static final boolean	IDS_ONLY			= false;
 
 	public static void main(final String[] args) {
 		sendRequest(Settings.getUrl(WebServiceUrlType.RECOMMENDER));
@@ -29,7 +27,7 @@ public class RunnerRecommender {
 			final AuthenticationToken token = Settings.getAuthToken();
 			final boolean success = proxy.importData1(channel, true, token);
 			LOG.info("Recommender matrix has been built: " + success);
-			final Record[] records = proxy.getRecommendation(MAX_RETURN_RECORDS, PRODUCT_ID, null, USER_INFORMATION, CHANNEL, IDS_ONLY, token);
+			final Record[] records = proxy.getRecommendation(MAX_RETURN_RECORDS, PRODUCT_ID, CHANNEL, IDS_ONLY, token).getResultRecords();
 			if (records != null) {
 				for (final Record rec : records) {
 					printSearchRecord(rec);

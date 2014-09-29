@@ -2,16 +2,16 @@ package de.factfinder.runner.print;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws69.String2StringMapEntry;
-import de.factfinder.wsclient.ws69.Record;
-import de.factfinder.wsclient.ws69.search.Filter;
-import de.factfinder.wsclient.ws69.search.FilterValue;
-import de.factfinder.wsclient.ws69.search.Group;
-import de.factfinder.wsclient.ws69.search.GroupElement;
-import de.factfinder.wsclient.ws69.search.Params;
-import de.factfinder.wsclient.ws69.search.Result;
-import de.factfinder.wsclient.ws69.search.SearchRecord;
-import de.factfinder.wsclient.ws69.search.SortItem;
+import de.factfinder.adapters.wsclient.ws610.String2StringMapEntry;
+import de.factfinder.wsclient.ws610.Record;
+import de.factfinder.wsclient.ws610.search.Filter;
+import de.factfinder.wsclient.ws610.search.FilterValue;
+import de.factfinder.wsclient.ws610.search.Group;
+import de.factfinder.wsclient.ws610.search.GroupElement;
+import de.factfinder.wsclient.ws610.search.Params;
+import de.factfinder.wsclient.ws610.search.Result;
+import de.factfinder.wsclient.ws610.search.SearchRecord;
+import de.factfinder.wsclient.ws610.search.SortItem;
 
 /**
  * Prints information about the search result.

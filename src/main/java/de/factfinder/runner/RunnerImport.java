@@ -2,13 +2,12 @@ package de.factfinder.runner;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws69.ImportPortTypeProxy;
-import de.factfinder.adapters.wsclient.ws69.String2StringMapEntry;
-import de.factfinder.wsclient.ws69.AuthenticationToken;
-import de.factfinder.wsclient.ws69.indexer.ImportRecord;
+import de.factfinder.adapters.wsclient.ws610.ImportPortTypeProxy;
+import de.factfinder.adapters.wsclient.ws610.String2StringMapEntry;
+import de.factfinder.wsclient.ws610.AuthenticationToken;
+import de.factfinder.wsclient.ws610.indexer.ImportRecord;
 
 public class RunnerImport {
-
 	private static final Logger	LOG	= Logger.getLogger(RunnerImport.class.getCanonicalName());
 
 	public static void main(final String[] args) {

@@ -5,16 +5,16 @@ import java.rmi.RemoteException;
 import org.apache.axis.client.Stub;
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws69.SearchPortTypeProxy;
+import de.factfinder.adapters.wsclient.ws610.SearchPortTypeProxy;
 import de.factfinder.runner.print.CampaignInformationPrinter;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
 import de.factfinder.runner.util.GzipUtil;
-import de.factfinder.wsclient.ws69.AuthenticationToken;
-import de.factfinder.wsclient.ws69.campaign.Campaign;
-import de.factfinder.wsclient.ws69.search.Params;
-import de.factfinder.wsclient.ws69.search.Result;
-import de.factfinder.wsclient.ws69.search.SearchControlParams;
-import de.factfinder.wsclient.ws69.suggest.ResultSuggestion;
+import de.factfinder.wsclient.ws610.AuthenticationToken;
+import de.factfinder.wsclient.ws610.campaign.Campaign;
+import de.factfinder.wsclient.ws610.search.Params;
+import de.factfinder.wsclient.ws610.search.Result;
+import de.factfinder.wsclient.ws610.search.SearchControlParams;
+import de.factfinder.wsclient.ws610.suggest.ResultSuggestion;
 
 /**
  * This class demonstrates the usage of the FACT-Finder web service.
@@ -125,12 +125,14 @@ public class RunnerSearch {
 			// Print the parameters which are going to be sent to the web service
 			LOG.info("==== BEGIN SUGGEST ENTRIES ====");
 			printSuggestEntries(proxy, params, searchControlParams, token);
+
 			getRefKey(stub);
 
 			LOG.info("==== END SUGGEST ENTRIES ====");
 
 			// Perform the search
-			final Result result = proxy.getResult1(params, searchControlParams, token, Settings.getUserInformation());
+			final Result result = proxy.getResult(params, searchControlParams, token, Settings.getTrackingInformation());
+
 			getRefKey(stub);
 
 			// The search result contains all matching campaigns, which we will process next.
@@ -143,7 +145,7 @@ public class RunnerSearch {
 			// Check if there didn't occur any problems while searching. If that happens, you probably have to take a look at the log files of the search
 			// application because "normal" errors result in an exception. If you don't host the search application yourself, ask Omikron to take a look at
 			// the logs.
-			if (!"errorOccured".equals(result.getResultStatus().getValue())) {
+			if (!"errorOccurred".equals(result.getResultStatus().getValue())) {
 				// After searching the search parameters which weren't set before are initialized with default values. I.e. if you don't specify a channel, it
 				// will be set with the default channel. Which of your channels is the default channel can be configured by Omikron.
 				LOG.info("==== BEGIN SEARCH PARAMETERS RETURNED ====");
@@ -205,7 +207,7 @@ public class RunnerSearch {
 			suggestParams.setQuery(searchTerm);
 			suggestParams.setResultsPerPage(Integer.MAX_VALUE);
 
-			final ResultSuggestion[] suggestions = proxy.getSuggestions1(suggestParams, searchControlParams, token, Settings.getUserInformation());
+			final ResultSuggestion[] suggestions = proxy.getSuggestions(suggestParams, searchControlParams, token).getSuggestions();
 
 			LOG.trace("Found " + suggestions.length + " suggest entries for search term [" + suggestParams.getQuery() + ']');
 			for (final ResultSuggestion suggestion : suggestions) {

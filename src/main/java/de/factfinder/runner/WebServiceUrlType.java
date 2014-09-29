@@ -7,21 +7,21 @@ import static de.factfinder.runner.Settings.BASEURL;
  */
 public enum WebServiceUrlType {
 	/** The search url. */
-	SEARCH(BASEURL + "/webservice/ws69/Search"),
+	SEARCH(BASEURL + "/webservice/ws610/Search"),
 	/** The refresh databases url. */
-	REFRESHDATABASES(BASEURL + "/webservice/ws69/RefreshDatabasesService"),
+	REFRESHDATABASES(BASEURL + "/webservice/ws610/RefreshDatabasesService"),
 	/** The import url. */
-	IMPORT(BASEURL + "/webservice/ws69/Import"),
+	IMPORT(BASEURL + "/webservice/ws610/Import"),
 	/** The recommender url. */
-	RECOMMENDER(BASEURL + "/webservice/ws69/Recommender"),
+	RECOMMENDER(BASEURL + "/webservice/ws610/Recommender"),
 	/** The tracking url. */
-	TRACKING(BASEURL + "/webservice/ws69/Tracking"),
+	TRACKING(BASEURL + "/webservice/ws610/Tracking"),
 	/** The tagcloud url. */
-	TAGCLOUD(BASEURL + "/webservice/ws69/Tagcloud"),
+	TAGCLOUD(BASEURL + "/webservice/ws610/Tagcloud"),
 	/** The usermanagement url. */
-	USERMANAGEMENT(BASEURL + "/webservice/ws69/UserManagement"),
+	USERMANAGEMENT(BASEURL + "/webservice/ws610/UserManagement"),
 	/** The campaign url. */
-	CAMPAIGN(BASEURL + "/webservice/ws69/Campaign");
+	CAMPAIGN(BASEURL + "/webservice/ws610/Campaign");
 
 	private final String	url;
 

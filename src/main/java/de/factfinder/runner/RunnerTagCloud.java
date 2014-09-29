@@ -4,11 +4,11 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws69.TagcloudPortTypeProxy;
-import de.factfinder.wsclient.ws69.AuthenticationToken;
-import de.factfinder.wsclient.ws69.search.Params;
-import de.factfinder.wsclient.ws69.whatshot.TagCloud;
-import de.factfinder.wsclient.ws69.whatshot.TagCloudEntry;
+import de.factfinder.adapters.wsclient.ws610.TagcloudPortTypeProxy;
+import de.factfinder.wsclient.ws610.AuthenticationToken;
+import de.factfinder.wsclient.ws610.search.Params;
+import de.factfinder.wsclient.ws610.whatshot.TagCloud;
+import de.factfinder.wsclient.ws610.whatshot.TagCloudEntry;
 
 public class RunnerTagCloud {
 	private static final Logger	LOG	= Logger.getLogger(RunnerTagCloud.class.getCanonicalName());

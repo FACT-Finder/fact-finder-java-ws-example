@@ -4,11 +4,10 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.wsclient.ws69.AuthenticationToken;
-import de.factfinder.adapters.wsclient.ws69.RefreshDatabasesServicePortTypeProxy;
+import de.factfinder.adapters.wsclient.ws610.RefreshDatabasesServicePortTypeProxy;
+import de.factfinder.wsclient.ws610.AuthenticationToken;
 
 public class RunnerAutoRefresh {
-
 	private static final Logger	LOG	= Logger.getLogger(RunnerAutoRefresh.class.getCanonicalName());
 
 	public static void main(final String[] args) {
