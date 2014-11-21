@@ -36,15 +36,15 @@ public class RunnerImport {
 			final String2StringMapEntry entryArtikelnummer = new String2StringMapEntry();
 			entryArtikelnummer.setKey("ArticleNumber");
 			entryArtikelnummer.setValue("24960999");
-			map[2] = entryArtikelnummer;
+			map[3] = entryArtikelnummer;
 			final String2StringMapEntry entryBeschreibung = new String2StringMapEntry();
 			entryBeschreibung.setKey("Description");
 			entryBeschreibung.setValue("Produktbeschreibung");
-			map[2] = entryBeschreibung;
+			map[4] = entryBeschreibung;
 			final String2StringMapEntry entryPreis = new String2StringMapEntry();
 			entryPreis.setKey("Price");
 			entryPreis.setValue("10");
-			map[2] = entryPreis;
+			map[5] = entryPreis;
 			importRecord.setRecord(map);
 
 			final ImportRecord importRecordUpdate = new ImportRecord();
@@ -53,7 +53,7 @@ public class RunnerImport {
 			final String2StringMapEntry entryTitelUpdate = new String2StringMapEntry();
 			entryTitelUpdate.setKey("Name");
 			entryTitelUpdate.setValue("Mustertitel");
-			mapUpdate[0] = entryTitel;
+			mapUpdate[0] = entryTitelUpdate;
 			importRecordUpdate.setRecord(mapUpdate);
 
 			final String channel = Settings.getChannel();
