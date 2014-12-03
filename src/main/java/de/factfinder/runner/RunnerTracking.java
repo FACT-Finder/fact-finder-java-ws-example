@@ -6,97 +6,147 @@ import org.apache.log4j.Logger;
 
 import de.factfinder.adapters.wsclient.ws610.String2StringMapEntry;
 import de.factfinder.adapters.wsclient.ws610.TrackingPortTypeProxy;
-import de.factfinder.wsclient.ws610.suggest.TrackingEvent;
 
 public class RunnerTracking {
-	private static final Logger	LOG			= Logger.getLogger(RunnerTracking.class.getCanonicalName());
-
-	private static final String	SHOP_USER	= "demoUser";
-	private static final String	COOKIE_ID	= "cookie";
-	private static final String	SESSION_ID	= "abc123def456ghi789";
-	private static final String	REF_KEY_1	= "DMgnzi6zw";
-	private static final String	REF_KEY_2	= "J5YMlyY1f";
+	private static final Logger	LOG	= Logger.getLogger(RunnerTracking.class.getCanonicalName());
 
 	public static void main(final String[] args) {
-		trackSessionInfo(Settings.getUrl(WebServiceUrlType.TRACKING));
-		trackInspect(Settings.getUrl(WebServiceUrlType.TRACKING));
-		trackBulkBuy(Settings.getUrl(WebServiceUrlType.TRACKING));
+		trackDetailClick(Settings.getUrl(WebServiceUrlType.TRACKING));
+		trackCart(Settings.getUrl(WebServiceUrlType.TRACKING));
+		trackBuy(Settings.getUrl(WebServiceUrlType.TRACKING));
+		trackRecEngineClick(Settings.getUrl(WebServiceUrlType.TRACKING));
+		trackSearchFeedback(Settings.getUrl(WebServiceUrlType.TRACKING));
+
 	}
 
-	private static void trackSessionInfo(final String endpoint) {
+	private static void trackDetailClick(final String endpoint) {
 		final TrackingPortTypeProxy tptp = new TrackingPortTypeProxy(endpoint);
 
 		try {
-			final String2StringMapEntry event = new String2StringMapEntry("event", "sessionInfo");
-			final String2StringMapEntry channel = new String2StringMapEntry("channel", "de");
-			final String2StringMapEntry site = new String2StringMapEntry("site", "wsdemo");
-			final String2StringMapEntry sid = new String2StringMapEntry("sid", SESSION_ID);
-			final String2StringMapEntry cid = new String2StringMapEntry("cid", COOKIE_ID);
-			final String2StringMapEntry uid = new String2StringMapEntry("uid", SHOP_USER);
+			// general information
+			final String2StringMapEntry id = new String2StringMapEntry("id", "3865");
+			// channel id will be passed below
+			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
+			final String2StringMapEntry event = new String2StringMapEntry("event", "click");
+			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
 
-			final String2StringMapEntry[] parameters = {event, channel, site, sid, cid, uid};
+			// event specific information
+			final String2StringMapEntry query = new String2StringMapEntry("query", "mountain bike");
+			final String2StringMapEntry pos = new String2StringMapEntry("pos", "28");
+			final String2StringMapEntry origPos = new String2StringMapEntry("origPos", "28");
+			final String2StringMapEntry page = new String2StringMapEntry("page", "3");
+			final String2StringMapEntry pageSize = new String2StringMapEntry("pageSize", "12");
+			final String2StringMapEntry origPageSize = new String2StringMapEntry("origPageSize", "12");
+			final String2StringMapEntry simi = new String2StringMapEntry("simi", "99.41");
+
+			final String2StringMapEntry[] parameters = {event, id, title, sid, userId, query, pos, origPos, pageSize, origPageSize, page, simi};
 
 			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
-			LOG.info("Tracking information logging status: " + status);
+			LOG.info("Tracking information 'detail click' logging status: " + status);
 		} catch (final RemoteException e) {
 			LOG.error(e);
 		}
 	}
 
-	private static void trackInspect(final String endpoint) {
+	private static void trackBuy(final String endpoint) {
 		final TrackingPortTypeProxy tptp = new TrackingPortTypeProxy(endpoint);
 
 		try {
-			final String2StringMapEntry event = new String2StringMapEntry("event", "inspect");
-			final String2StringMapEntry channel = new String2StringMapEntry("channel", "de");
-			final String2StringMapEntry sourceRef = new String2StringMapEntry("sourceRef", REF_KEY_1);
-			final String2StringMapEntry id = new String2StringMapEntry("id", "1234-56");
-			final String2StringMapEntry sid = new String2StringMapEntry("sid", SESSION_ID);
+			// general information
+			final String2StringMapEntry id = new String2StringMapEntry("id", "3865");
+			// channel id will be passed below
+			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
+			final String2StringMapEntry event = new String2StringMapEntry("event", "cart");
+			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
 
-			final String2StringMapEntry[] parameters = {event, sourceRef, channel, id, sid};
+			// event specific information
+			final String2StringMapEntry count = new String2StringMapEntry("count", "48");
+			final String2StringMapEntry price = new String2StringMapEntry("price", "1499");
+
+			final String2StringMapEntry[] parameters = {event, id, title, sid, userId, count, price};
 
 			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
-			LOG.info("Tracking information logging status: " + status);
+			LOG.info("Tracking information 'cart' logging status: " + status);
 		} catch (final RemoteException e) {
 			LOG.error(e);
 		}
 	}
 
-	private static void trackBulkBuy(final String endpoint) {
+	private static void trackCart(final String endpoint) {
 		final TrackingPortTypeProxy tptp = new TrackingPortTypeProxy(endpoint);
-		final String channel = Settings.getChannel();
 
 		try {
-			// first buy event
-			final String2StringMapEntry[] parameters1 = getInterestParameters("buy", channel, SESSION_ID, REF_KEY_1, "3364790", "M3364790", "1", "10");
+			// general information
+			final String2StringMapEntry id = new String2StringMapEntry("id", "3865");
+			// channel id will be passed below
+			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
+			final String2StringMapEntry event = new String2StringMapEntry("event", "checkout");
+			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
 
-			// second buy event
-			final String2StringMapEntry[] parameters2 = getInterestParameters("buy", channel, SESSION_ID, REF_KEY_2, "66486423", "M46999467", "10", "1.99");
+			// event specific information
+			final String2StringMapEntry count = new String2StringMapEntry("count", "48");
+			final String2StringMapEntry price = new String2StringMapEntry("price", "1499");
 
-			// third buy event
-			final String2StringMapEntry[] parameters3 = getInterestParameters("buy", channel, SESSION_ID, REF_KEY_2, "29986254", "M11289556", "2", "9.99");
+			final String2StringMapEntry[] parameters = {event, id, title, sid, userId, count, price};
 
-			final TrackingEvent[] trackingEvents = {new TrackingEvent(parameters1), new TrackingEvent(parameters2), new TrackingEvent(parameters3)};
-
-			final boolean status = tptp.logMultipleInformation(channel, trackingEvents, Settings.getAuthToken());
-			LOG.info("Tracking multiple information logging status: " + status);
+			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
+			LOG.info("Tracking information 'checkout' logging status: " + status);
 		} catch (final RemoteException e) {
 			LOG.error(e);
 		}
 	}
 
-	private static String2StringMapEntry[] getInterestParameters(final String interestType, final String channel, final String sid, final String sourceRef,
-			final String id, final String mid, final String amount, final String price) {
-		final String2StringMapEntry eventEntry = new String2StringMapEntry("event", interestType);
-		final String2StringMapEntry channelEntry = new String2StringMapEntry("channel", channel);
-		final String2StringMapEntry sidEntry = new String2StringMapEntry("sid", sid);
-		final String2StringMapEntry sourceRefEntry = new String2StringMapEntry("sourceRef", sourceRef);
-		final String2StringMapEntry idEntry = new String2StringMapEntry("id", id);
-		final String2StringMapEntry midEntry = new String2StringMapEntry("mid", mid);
-		final String2StringMapEntry amountEntry = new String2StringMapEntry("amount", amount);
-		final String2StringMapEntry priceEntry = new String2StringMapEntry("price", price);
+	private static void trackRecEngineClick(final String endpoint) {
+		final TrackingPortTypeProxy tptp = new TrackingPortTypeProxy(endpoint);
 
-		final String2StringMapEntry[] interestParameters = {eventEntry, channelEntry, sidEntry, sourceRefEntry, idEntry, midEntry, amountEntry, priceEntry};
-		return interestParameters;
+		try {
+			// general information
+			final String2StringMapEntry id = new String2StringMapEntry("id", "3865");
+			// channel id will be passed below
+			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
+			final String2StringMapEntry event = new String2StringMapEntry("event", "recommendationClick");
+			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
+
+			// event specific information
+			final String2StringMapEntry mainId = new String2StringMapEntry("mainId", "4848");
+
+			final String2StringMapEntry[] parameters = {event, id, title, sid, userId, mainId};
+
+			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
+			LOG.info("Tracking information 'recommendationClick' logging status: " + status);
+		} catch (final RemoteException e) {
+			LOG.error(e);
+		}
 	}
+
+	private static void trackSearchFeedback(final String endpoint) {
+		final TrackingPortTypeProxy tptp = new TrackingPortTypeProxy(endpoint);
+
+		try {
+			// general information
+			final String2StringMapEntry id = new String2StringMapEntry("id", "3865");
+			// channel id will be passed below
+			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
+			final String2StringMapEntry event = new String2StringMapEntry("event", "feedback");
+			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
+
+			// event specific information
+			final String2StringMapEntry query = new String2StringMapEntry("query", "mountain bike");
+			final String2StringMapEntry positive = new String2StringMapEntry("positive", "true");
+			final String2StringMapEntry message = new String2StringMapEntry("message", "great products, I really found what I was looking for.");
+
+			final String2StringMapEntry[] parameters = {event, id, title, sid, userId, query, positive, message};
+
+			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
+			LOG.info("Tracking information 'feedback' logging status: " + status);
+		} catch (final RemoteException e) {
+			LOG.error(e);
+		}
+	}
+
 }
