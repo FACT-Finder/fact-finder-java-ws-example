@@ -2,16 +2,16 @@ package de.factfinder.runner.print;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws610.String2StringMapEntry;
-import de.factfinder.wsclient.ws610.Record;
-import de.factfinder.wsclient.ws610.search.Filter;
-import de.factfinder.wsclient.ws610.search.FilterValue;
-import de.factfinder.wsclient.ws610.search.Group;
-import de.factfinder.wsclient.ws610.search.GroupElement;
-import de.factfinder.wsclient.ws610.search.Params;
-import de.factfinder.wsclient.ws610.search.Result;
-import de.factfinder.wsclient.ws610.search.SearchRecord;
-import de.factfinder.wsclient.ws610.search.SortItem;
+import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
+import de.factfinder.wsclient.ws611.Record;
+import de.factfinder.wsclient.ws611.search.Filter;
+import de.factfinder.wsclient.ws611.search.FilterValue;
+import de.factfinder.wsclient.ws611.search.Group;
+import de.factfinder.wsclient.ws611.search.GroupElement;
+import de.factfinder.wsclient.ws611.search.Params;
+import de.factfinder.wsclient.ws611.search.Result;
+import de.factfinder.wsclient.ws611.search.SearchRecord;
+import de.factfinder.wsclient.ws611.search.SortItem;
 
 /**
  * Prints information about the search result.
@@ -99,7 +99,7 @@ public final class SearchResultInformationPrinter {
 	 */
 	public void printRecord(final Record record, final String prefix) {
 		final StringBuilder recordString = printString2StringMap(record.getRecord());
-		LOG.info(prefix + "Record: " + recordString.toString());
+		LOG.info(prefix + "Record: id=" + record.getId() + "; content:" + recordString.toString());
 	}
 
 	/**

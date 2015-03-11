@@ -2,8 +2,8 @@ package de.factfinder.runner;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import de.factfinder.wsclient.ws610.AuthenticationToken;
-import de.factfinder.wsclient.ws610.tracking.TrackingInformation;
+import de.factfinder.wsclient.ws611.AuthenticationToken;
+import de.factfinder.wsclient.ws611.tracking.TrackingInformation;
 
 /**
  * This class manages the {@linkplain AuthenticationToken} , channel and the webservice url.
@@ -13,7 +13,8 @@ public final class Settings {
 	/**
 	 * Base URL of the FACT-Finder environment.
 	 */
-	protected static final String		BASEURL				= "http://localhost:8080/FACT-Finder6.10";
+	private static final String			APPLICATION_URL		= "http://localhost:8080/FACT-Finder6.11";
+	protected static final String		WEBSERVICE_BASE_URL	= APPLICATION_URL + "/webservice/ws611";
 	private static final String			CHANNEL				= "de";
 
 	// authentication settings for requests
