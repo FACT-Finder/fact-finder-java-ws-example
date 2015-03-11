@@ -29,15 +29,13 @@ public final class SearchResultInformationPrinter {
 
 		LOG.info("Query: [" + params.getQuery() + "]");
 
-		LOG.info("Article number: [" + params.getArticleNumber() + "] (Don't know if this is still in use. See FFFCORE-64)");
+		LOG.info("Article number: [" + bool2Str(params.getArticleNumber()) + "]");
 
-		LOG.info("No article number search: [" + params.getNoArticleNumberSearch()
+		LOG.info("No article number search: [" + bool2Str(params.getNoArticleNumberSearch())
 				+ "] (if the query looks like an article number but FACT-Finder should perform a normal search)");
 
 		LOG.info("Result page: [" + params.getPage() + "] (if there are more hits than set in 'records per page', "
 				+ "the result is split into several pages. By setting this parameter you can get the records for a specific page.)");
-
-		// log.info("Random seed: [" + params.getRandomSeed() + "] (this parameter is no longer used and will be removed in a future release. See FFFCORE-63)");
 
 		LOG.info("Records per page: [" + params.getResultsPerPage() + "]");
 
@@ -160,5 +158,9 @@ public final class SearchResultInformationPrinter {
 			recordString.append(entry.getKey()).append("=[").append(entry.getValue()).append("]");
 		}
 		return recordString;
+	}
+
+	private String bool2Str(final Boolean value) {
+		return value == null ? "false" : value.toString();
 	}
 }

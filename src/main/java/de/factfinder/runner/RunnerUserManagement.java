@@ -66,7 +66,7 @@ public final class RunnerUserManagement {
 			}
 
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
@@ -87,7 +87,7 @@ public final class RunnerUserManagement {
 			}
 
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
@@ -111,7 +111,7 @@ public final class RunnerUserManagement {
 						+ Arrays.toString(user.getChannels()) + ", roles=" + Arrays.toString(user.getRoles()) + "] already exists.");
 			}
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
@@ -133,7 +133,7 @@ public final class RunnerUserManagement {
 			}
 
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 

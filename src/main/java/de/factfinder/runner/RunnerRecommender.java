@@ -32,9 +32,11 @@ public class RunnerRecommender {
 				for (final Record rec : records) {
 					printSearchRecord(rec);
 				}
+			} else {
+				LOG.info("No recommendations received.");
 			}
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 

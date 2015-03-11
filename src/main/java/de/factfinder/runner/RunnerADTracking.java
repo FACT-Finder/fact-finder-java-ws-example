@@ -39,7 +39,7 @@ public class RunnerADTracking {
 			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
 			LOG.info("Tracking information logging status: " + status);
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
@@ -58,7 +58,7 @@ public class RunnerADTracking {
 			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
 			LOG.info("Tracking information logging status: " + status);
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class RunnerADTracking {
 			final boolean status = tptp.logMultipleInformation(channel, trackingEvents, Settings.getAuthToken());
 			LOG.info("Tracking multiple information logging status: " + status);
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 

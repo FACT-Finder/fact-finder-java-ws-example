@@ -26,7 +26,7 @@ public class RunnerAutoRefresh {
 			LOG.info("All DBs refreshed!");
 
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 }
