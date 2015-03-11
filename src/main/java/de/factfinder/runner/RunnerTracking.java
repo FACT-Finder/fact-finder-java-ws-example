@@ -45,7 +45,7 @@ public class RunnerTracking {
 			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
 			LOG.info("Tracking information 'detail click' logging status: " + status);
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class RunnerTracking {
 			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
 			LOG.info("Tracking information 'cart' logging status: " + status);
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
@@ -95,7 +95,7 @@ public class RunnerTracking {
 			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
 			LOG.info("Tracking information 'checkout' logging status: " + status);
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
@@ -119,7 +119,7 @@ public class RunnerTracking {
 			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
 			LOG.info("Tracking information 'recommendationClick' logging status: " + status);
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
@@ -145,7 +145,7 @@ public class RunnerTracking {
 			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
 			LOG.info("Tracking information 'feedback' logging status: " + status);
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 

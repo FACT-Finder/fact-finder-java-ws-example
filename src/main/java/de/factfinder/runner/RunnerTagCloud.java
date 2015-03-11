@@ -83,7 +83,7 @@ public class RunnerTagCloud {
 			LOG.info("=== END TAGCLOUD ENTRIES ===");
 
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 
