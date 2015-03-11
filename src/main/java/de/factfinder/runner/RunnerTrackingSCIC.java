@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
 import de.factfinder.adapters.wsclient.ws611.TrackingPortTypeProxy;
 
-public class RunnerTracking {
-	private static final Logger	LOG	= Logger.getLogger(RunnerTracking.class.getCanonicalName());
+public class RunnerTrackingSCIC {
+	private static final Logger	LOG	= Logger.getLogger(RunnerTrackingSCIC.class.getCanonicalName());
 
 	public static void main(final String[] args) {
 		trackDetailClick(Settings.getUrl(WebServiceUrlType.TRACKING));

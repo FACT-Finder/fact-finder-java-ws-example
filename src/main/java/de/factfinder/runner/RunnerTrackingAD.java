@@ -8,8 +8,8 @@ import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
 import de.factfinder.adapters.wsclient.ws611.TrackingPortTypeProxy;
 import de.factfinder.wsclient.ws611.suggest.TrackingEvent;
 
-public class RunnerADTracking {
-	private static final Logger	LOG			= Logger.getLogger(RunnerADTracking.class.getCanonicalName());
+public class RunnerTrackingAD {
+	private static final Logger	LOG			= Logger.getLogger(RunnerTrackingAD.class.getCanonicalName());
 
 	private static final String	SHOP_USER	= "demoUser";
 	private static final String	COOKIE_ID	= "cookie";
