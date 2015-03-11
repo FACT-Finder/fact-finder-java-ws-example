@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.factfinder</groupId>
 	<artifactId>fff-ws-runner</artifactId>
-	<version>6.11.0</version>
+	<version>6.11.1</version>
 	
 	<dependencies>
 		<dependency>

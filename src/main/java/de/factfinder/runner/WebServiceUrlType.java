@@ -21,7 +21,11 @@ public enum WebServiceUrlType {
 	/** The usermanagement url. */
 	USERMANAGEMENT(WEBSERVICE_BASE_URL + "/UserManagement"),
 	/** The campaign url. */
-	CAMPAIGN(WEBSERVICE_BASE_URL + "/Campaign");
+	CAMPAIGN(WEBSERVICE_BASE_URL + "/Campaign"),
+	/** The similar articles url. */
+	SIMILAR_ARTICLES(WEBSERVICE_BASE_URL + "/SimilarProducts"),
+	/** The endpoint for product comparison. */
+	PRODUCT_COMPARISON(WEBSERVICE_BASE_URL + "/ProductComparison");
 
 	private final String	url;
 
