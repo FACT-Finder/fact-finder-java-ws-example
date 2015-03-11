@@ -4,8 +4,8 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws610.String2StringMapEntry;
-import de.factfinder.adapters.wsclient.ws610.TrackingPortTypeProxy;
+import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
+import de.factfinder.adapters.wsclient.ws611.TrackingPortTypeProxy;
 
 public class RunnerTracking {
 	private static final Logger	LOG	= Logger.getLogger(RunnerTracking.class.getCanonicalName());
@@ -16,6 +16,7 @@ public class RunnerTracking {
 		trackBuy(Settings.getUrl(WebServiceUrlType.TRACKING));
 		trackRecEngineClick(Settings.getUrl(WebServiceUrlType.TRACKING));
 		trackSearchFeedback(Settings.getUrl(WebServiceUrlType.TRACKING));
+		trackLogin(Settings.getUrl(WebServiceUrlType.TRACKING));
 
 	}
 
@@ -29,7 +30,7 @@ public class RunnerTracking {
 			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
 			final String2StringMapEntry event = new String2StringMapEntry("event", "click");
 			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
-			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "user123");
 
 			// event specific information
 			final String2StringMapEntry query = new String2StringMapEntry("query", "mountain bike");
@@ -59,7 +60,7 @@ public class RunnerTracking {
 			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
 			final String2StringMapEntry event = new String2StringMapEntry("event", "cart");
 			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
-			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "user123");
 
 			// event specific information
 			final String2StringMapEntry count = new String2StringMapEntry("count", "48");
@@ -84,7 +85,7 @@ public class RunnerTracking {
 			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
 			final String2StringMapEntry event = new String2StringMapEntry("event", "checkout");
 			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
-			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "user123");
 
 			// event specific information
 			final String2StringMapEntry count = new String2StringMapEntry("count", "48");
@@ -109,7 +110,7 @@ public class RunnerTracking {
 			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
 			final String2StringMapEntry event = new String2StringMapEntry("event", "recommendationClick");
 			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
-			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "user123");
 
 			// event specific information
 			final String2StringMapEntry mainId = new String2StringMapEntry("mainId", "4848");
@@ -133,7 +134,7 @@ public class RunnerTracking {
 			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
 			final String2StringMapEntry event = new String2StringMapEntry("event", "feedback");
 			final String2StringMapEntry title = new String2StringMapEntry("title", "BMC streetfire SSW");
-			final String2StringMapEntry userId = new String2StringMapEntry("userId", "abc123def456ghi789");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "user123");
 
 			// event specific information
 			final String2StringMapEntry query = new String2StringMapEntry("query", "mountain bike");
@@ -149,4 +150,21 @@ public class RunnerTracking {
 		}
 	}
 
+	private static void trackLogin(final String endpoint) {
+		final TrackingPortTypeProxy tptp = new TrackingPortTypeProxy(endpoint);
+
+		try {
+			// channel id will be passed below
+			final String2StringMapEntry event = new String2StringMapEntry("event", "login");
+			final String2StringMapEntry sid = new String2StringMapEntry("sid", "abc123def456ghi789");
+			final String2StringMapEntry userId = new String2StringMapEntry("userId", "user123");
+
+			final String2StringMapEntry[] parameters = {event, sid, userId};
+
+			final boolean status = tptp.logInformation(Settings.getChannel(), parameters, Settings.getAuthToken());
+			LOG.info("Tracking information 'login' logging status: " + status);
+		} catch (final RemoteException e) {
+			LOG.error(null, e);
+		}
+	}
 }

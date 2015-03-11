@@ -5,11 +5,11 @@ import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws610.UserManagementPortTypeProxy;
-import de.factfinder.wsclient.ws610.AuthenticationToken;
-import de.factfinder.wsclient.ws610.usermanagement.Group;
-import de.factfinder.wsclient.ws610.usermanagement.Role;
-import de.factfinder.wsclient.ws610.usermanagement.User;
+import de.factfinder.adapters.wsclient.ws611.UserManagementPortTypeProxy;
+import de.factfinder.wsclient.ws611.AuthenticationToken;
+import de.factfinder.wsclient.ws611.usermanagement.Group;
+import de.factfinder.wsclient.ws611.usermanagement.Role;
+import de.factfinder.wsclient.ws611.usermanagement.User;
 
 /**
  * This class demonstrates the use of the user management.

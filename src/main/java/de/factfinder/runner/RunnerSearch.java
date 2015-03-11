@@ -5,18 +5,18 @@ import java.rmi.RemoteException;
 import org.apache.axis.client.Stub;
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws610.SearchPortTypeProxy;
+import de.factfinder.adapters.wsclient.ws611.SearchPortTypeProxy;
 import de.factfinder.runner.print.CampaignInformationPrinter;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
 import de.factfinder.runner.util.GzipUtil;
-import de.factfinder.wsclient.ws610.AuthenticationToken;
-import de.factfinder.wsclient.ws610.campaign.Campaign;
-import de.factfinder.wsclient.ws610.search.FilterValue;
-import de.factfinder.wsclient.ws610.search.FilterValueType;
-import de.factfinder.wsclient.ws610.search.Params;
-import de.factfinder.wsclient.ws610.search.Result;
-import de.factfinder.wsclient.ws610.search.SearchControlParams;
-import de.factfinder.wsclient.ws610.suggest.ResultSuggestion;
+import de.factfinder.wsclient.ws611.AuthenticationToken;
+import de.factfinder.wsclient.ws611.campaign.Campaign;
+import de.factfinder.wsclient.ws611.search.FilterValue;
+import de.factfinder.wsclient.ws611.search.FilterValueType;
+import de.factfinder.wsclient.ws611.search.Params;
+import de.factfinder.wsclient.ws611.search.Result;
+import de.factfinder.wsclient.ws611.search.SearchControlParams;
+import de.factfinder.wsclient.ws611.suggest.ResultSuggestion;
 
 /**
  * This class demonstrates the usage of the FACT-Finder web service.

@@ -1,27 +1,27 @@
 package de.factfinder.runner;
 
-import static de.factfinder.runner.Settings.BASEURL;
+import static de.factfinder.runner.Settings.WEBSERVICE_BASE_URL;
 
 /**
  * The possible urls for the webservice.
  */
 public enum WebServiceUrlType {
 	/** The search url. */
-	SEARCH(BASEURL + "/webservice/ws610/Search"),
+	SEARCH(WEBSERVICE_BASE_URL + "/Search"),
 	/** The refresh databases url. */
-	REFRESHDATABASES(BASEURL + "/webservice/ws610/RefreshDatabasesService"),
+	REFRESHDATABASES(WEBSERVICE_BASE_URL + "/RefreshDatabasesService"),
 	/** The import url. */
-	IMPORT(BASEURL + "/webservice/ws610/Import"),
+	IMPORT(WEBSERVICE_BASE_URL + "/Import"),
 	/** The recommender url. */
-	RECOMMENDER(BASEURL + "/webservice/ws610/Recommender"),
+	RECOMMENDER(WEBSERVICE_BASE_URL + "/Recommender"),
 	/** The tracking url. */
-	TRACKING(BASEURL + "/webservice/ws610/Tracking"),
+	TRACKING(WEBSERVICE_BASE_URL + "/Tracking"),
 	/** The tagcloud url. */
-	TAGCLOUD(BASEURL + "/webservice/ws610/Tagcloud"),
+	TAGCLOUD(WEBSERVICE_BASE_URL + "/Tagcloud"),
 	/** The usermanagement url. */
-	USERMANAGEMENT(BASEURL + "/webservice/ws610/UserManagement"),
+	USERMANAGEMENT(WEBSERVICE_BASE_URL + "/UserManagement"),
 	/** The campaign url. */
-	CAMPAIGN(BASEURL + "/webservice/ws610/Campaign");
+	CAMPAIGN(WEBSERVICE_BASE_URL + "/Campaign");
 
 	private final String	url;
 

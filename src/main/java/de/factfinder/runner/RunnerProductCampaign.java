@@ -4,11 +4,11 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws610.CampaignPortTypeProxy;
+import de.factfinder.adapters.wsclient.ws611.CampaignPortTypeProxy;
 import de.factfinder.runner.print.CampaignInformationPrinter;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
-import de.factfinder.wsclient.ws610.AuthenticationToken;
-import de.factfinder.wsclient.ws610.campaign.Campaign;
+import de.factfinder.wsclient.ws611.AuthenticationToken;
+import de.factfinder.wsclient.ws611.campaign.Campaign;
 
 /**
  * This is a example of how to use the Web-Services to access product campaigns.

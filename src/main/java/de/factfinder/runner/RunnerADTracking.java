@@ -4,9 +4,9 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws610.String2StringMapEntry;
-import de.factfinder.adapters.wsclient.ws610.TrackingPortTypeProxy;
-import de.factfinder.wsclient.ws610.suggest.TrackingEvent;
+import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
+import de.factfinder.adapters.wsclient.ws611.TrackingPortTypeProxy;
+import de.factfinder.wsclient.ws611.suggest.TrackingEvent;
 
 public class RunnerADTracking {
 	private static final Logger	LOG			= Logger.getLogger(RunnerADTracking.class.getCanonicalName());

@@ -4,8 +4,8 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws610.RefreshDatabasesServicePortTypeProxy;
-import de.factfinder.wsclient.ws610.AuthenticationToken;
+import de.factfinder.adapters.wsclient.ws611.RefreshDatabasesServicePortTypeProxy;
+import de.factfinder.wsclient.ws611.AuthenticationToken;
 
 public class RunnerAutoRefresh {
 	private static final Logger	LOG	= Logger.getLogger(RunnerAutoRefresh.class.getCanonicalName());
@@ -21,9 +21,16 @@ public class RunnerAutoRefresh {
 			final String channel = Settings.getChannel();
 			final AuthenticationToken token = Settings.getAuthToken();
 			proxy.refreshDatabase(channel, token);
-			LOG.info("DB " + channel + " refreshed!");
+			LOG.info("Search database of channel '" + channel + "' got refreshed!");
+
+			proxy.refreshSuggestDatabase(channel, token);
+			LOG.info("Suggest database of channel '" + channel + "' got refreshed!");
+
+			proxy.refreshRecommenderDatabase(channel, token);
+			LOG.info("RecommendationEngine database of channel '" + channel + "' got refreshed!");
+
 			proxy.refreshAllDatabases(token);
-			LOG.info("All DBs refreshed!");
+			LOG.info("All databases have been refreshed!");
 
 		} catch (final RemoteException e) {
 			LOG.error(null, e);
