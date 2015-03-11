@@ -11,6 +11,8 @@ import de.factfinder.runner.print.SearchResultInformationPrinter;
 import de.factfinder.runner.util.GzipUtil;
 import de.factfinder.wsclient.ws610.AuthenticationToken;
 import de.factfinder.wsclient.ws610.campaign.Campaign;
+import de.factfinder.wsclient.ws610.search.FilterValue;
+import de.factfinder.wsclient.ws610.search.FilterValueType;
 import de.factfinder.wsclient.ws610.search.Params;
 import de.factfinder.wsclient.ws610.search.Result;
 import de.factfinder.wsclient.ws610.search.SearchControlParams;
@@ -86,16 +88,31 @@ public class RunnerSearch {
 		// only relevant if your using SEO. If true this will return keywords related to each record.
 		searchControlParams.setUseKeywords(true);
 
-		// We want to filter the result.
-		// Filter[] filters = new Filter[1];
-		// Only show products in the category "DVD". The filter name is the name of a field in the search database.
-		// filters[0] = new Filter("Kategorie", false, "DVD", null);
+		// // If we want to filter the result:
+		// final Filter[] filters = new Filter[1];
+
+		// // Only show products in the category "DVD". The filter name is the name of a field in the search database.
+		// filters[0] = new Filter("Kategorie", false, filterValues(filterValue("DVD")), null);
+
+		// // OR: only show products which are from manufacturer Atari or Vivendi
+		// filters[0] = new Filter("Hersteller", false, filterValues(filterValue("Atari"), filterValue(FilterValueType.or, "Vivendi")), null);
 		// params.setFilters(filters);
 
-		// FilterValue[] manufacturers = new FilterValue[] {new FilterValue(FilterValueType.and, "Atari"), new FilterValue(FilterValueType.and, "Vivendi")};
-		// filters[0] = new Filter("Hersteller", manufacturers);
-
 		sendRequest(endpoint, params, searchControlParams);
+	}
+
+	@SuppressWarnings("unused")
+	private static FilterValue filterValue(final String value) {
+		return filterValue(FilterValueType.and, value);
+	}
+
+	private static FilterValue filterValue(final FilterValueType type, final String value) {
+		return new FilterValue(false, type, value, null);
+	}
+
+	@SuppressWarnings("unused")
+	private static FilterValue[] filterValues(final FilterValue... values) {
+		return values;
 	}
 
 	/**
@@ -167,7 +184,7 @@ public class RunnerSearch {
 				LOG.info("An unknown error occurred while searching. Please check the logs of the search application.");
 			}
 		} catch (final RemoteException e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
 	}
 

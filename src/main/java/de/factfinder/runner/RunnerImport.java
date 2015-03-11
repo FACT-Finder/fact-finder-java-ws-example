@@ -18,38 +18,10 @@ public class RunnerImport {
 		final ImportPortTypeProxy proxy = new ImportPortTypeProxy(endpoint);
 
 		try {
-			final ImportRecord importRecord = new ImportRecord();
-			final String2StringMapEntry[] map = new String2StringMapEntry[6];
-			importRecord.setId("123");
-			final String2StringMapEntry entryTitel = new String2StringMapEntry();
-			entryTitel.setKey("Name");
-			entryTitel.setValue("Produktname");
-			map[0] = entryTitel;
-			final String2StringMapEntry entryHersteller = new String2StringMapEntry();
-			entryHersteller.setKey("Brand");
-			entryHersteller.setValue("Herstellername");
-			map[1] = entryHersteller;
-			final String2StringMapEntry entryEAN = new String2StringMapEntry();
-			entryEAN.setKey("EAN");
-			entryEAN.setValue("1234567891320");
-			map[2] = entryEAN;
-			final String2StringMapEntry entryArtikelnummer = new String2StringMapEntry();
-			entryArtikelnummer.setKey("ArticleNumber");
-			entryArtikelnummer.setValue("24960999");
-			map[3] = entryArtikelnummer;
-			final String2StringMapEntry entryBeschreibung = new String2StringMapEntry();
-			entryBeschreibung.setKey("Description");
-			entryBeschreibung.setValue("Produktbeschreibung");
-			map[4] = entryBeschreibung;
-			final String2StringMapEntry entryPreis = new String2StringMapEntry();
-			entryPreis.setKey("Price");
-			entryPreis.setValue("10");
-			map[5] = entryPreis;
-			importRecord.setRecord(map);
-
 			final ImportRecord importRecordUpdate = new ImportRecord();
 			final String2StringMapEntry[] mapUpdate = new String2StringMapEntry[1];
 			importRecordUpdate.setId("123");
+
 			final String2StringMapEntry entryTitelUpdate = new String2StringMapEntry();
 			entryTitelUpdate.setKey("Name");
 			entryTitelUpdate.setValue("Mustertitel");
@@ -58,19 +30,43 @@ public class RunnerImport {
 
 			final String channel = Settings.getChannel();
 			final AuthenticationToken token = Settings.getAuthToken();
+			ImportRecord record = new ImportRecord();
 
-			proxy.insertRecord(importRecord, channel, false, token);
+			LOG.info("Insert record");
+			record.setId("123");
+			record.setRecord(map(	entry("Name", "Name Of the Product"), entry("Brand", "Brand name of the product"), entry("EAN", "1234567891320"),
+									entry("ArticleNumber", "24960999"), entry("Description", "Produktbeschreibung"), entry("Price", "10")));
+			proxy.insertRecord(record, channel, false, token);
 
-			proxy.updateRecord(importRecordUpdate, channel, false, token);
+			LOG.info("Update record");
+			record = new ImportRecord();
+			record.setId("123");
+			record.setRecord(map(entry("Name", "New title of the product")));
+			proxy.updateRecord(record, channel, false, token);
 
+			LOG.info("Delete record");
 			proxy.deleteRecord("123", channel, false, token);
 
+			LOG.info("Start product data import");
 			proxy.startImport(channel, token);
-			proxy.startSuggestImport(channel, token);
-			LOG.info("Record Imported Successfully");
 
+			LOG.info("Start suggest data import");
+			proxy.startSuggestImport(channel, token);
+
+			LOG.info("All finished successfully");
 		} catch (final Exception e) {
-			LOG.error(e);
+			LOG.error(null, e);
 		}
+	}
+
+	private static String2StringMapEntry entry(final String key, final String value) {
+		final String2StringMapEntry entryTitel = new String2StringMapEntry();
+		entryTitel.setKey(key);
+		entryTitel.setValue(value);
+		return entryTitel;
+	}
+
+	private static String2StringMapEntry[] map(final String2StringMapEntry... values) {
+		return values;
 	}
 }

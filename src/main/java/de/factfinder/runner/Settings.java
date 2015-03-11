@@ -21,6 +21,7 @@ public final class Settings {
 	private static final String			REQUEST_PASSWORD	= "userpw";
 	private static final String			PREFIX				= "FACT-FINDER";
 	private static final String			POSTFIX				= "FACT-FINDER";
+	private static final boolean		ADVANCED_MODE		= true;
 
 	// tracking related settings, see documentation for meaning.
 	private static AuthenticationToken	authToken			= null;
@@ -40,13 +41,16 @@ public final class Settings {
 			authToken = new AuthenticationToken();
 			authToken.setUsername(REQUEST_USER);
 		}
-		/*
-		 * For demo purpose normal Hashed password technique is used.
-		 */
+
 		final String hashPassword = DigestUtils.md5Hex(REQUEST_PASSWORD);
-		final long timeStamp = System.currentTimeMillis();
-		authToken.setPassword(DigestUtils.md5Hex(PREFIX + timeStamp + hashPassword + POSTFIX));
-		authToken.setTimestamp(Long.toString(timeStamp));
+		if (ADVANCED_MODE) {
+			final long timeStamp = System.currentTimeMillis();
+			authToken.setPassword(DigestUtils.md5Hex(PREFIX + timeStamp + hashPassword + POSTFIX));
+			authToken.setTimestamp(Long.toString(timeStamp));
+		} else {
+			authToken.setPassword(hashPassword);
+		}
+
 		return authToken;
 	}
 
