@@ -1,5 +1,7 @@
 package de.factfinder.runner.print;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
@@ -21,7 +23,7 @@ public final class SearchResultInformationPrinter {
 
 	/**
 	 * Prints the search parameters.
-	 * 
+	 *
 	 * @param params The search parameters.
 	 */
 	public void printSearchParameters(final Params params) {
@@ -29,9 +31,9 @@ public final class SearchResultInformationPrinter {
 
 		LOG.info("Query: [" + params.getQuery() + "]");
 
-		LOG.info("Article number: [" + bool2Str(params.getArticleNumber()) + "]");
+		LOG.info("Article number: [" + bool2Str(params.isArticleNumber()) + "]");
 
-		LOG.info("No article number search: [" + bool2Str(params.getNoArticleNumberSearch())
+		LOG.info("No article number search: [" + bool2Str(params.isNoArticleNumberSearch())
 				+ "] (if the query looks like an article number but FACT-Finder should perform a normal search)");
 
 		LOG.info("Result page: [" + params.getPage() + "] (if there are more hits than set in 'records per page', "
@@ -47,7 +49,7 @@ public final class SearchResultInformationPrinter {
 			final StringBuilder msg = new StringBuilder("Sort options:");
 			for (final SortItem item : params.getSortsList()) {
 				msg.append("\n\tname=[").append(item.getName()).append("], order=[").append(item.getOrder());
-				if (item.getSelected() != null && item.getSelected()) {
+				if (item.isSelected()) {
 					msg.append(" (selected)");
 				}
 			}
@@ -68,10 +70,10 @@ public final class SearchResultInformationPrinter {
 				// If the filter is set to several values: manufacturer="Atari" or "Apple"
 				if (filter.getValueList() != null) {
 					msg.append(", multiple values:");
-					for (int i = 0; i < filter.getValueList().length; i++) {
-						final FilterValue value = filter.getValueList()[i];
+					for (int i = 0; i < filter.getValueList().size(); i++) {
+						final FilterValue value = filter.getValueList().get(i);
 						if (i > 0) {
-							msg.append(" ").append(value.getType().getValue());
+							msg.append(" ").append(value.getType());
 						}
 						msg.append(" ").append(value.getValue());
 					}
@@ -83,7 +85,7 @@ public final class SearchResultInformationPrinter {
 
 	/**
 	 * Prints a single search record.
-	 * 
+	 *
 	 * @param record The record.
 	 */
 	public void printSearchRecord(final SearchRecord record) {
@@ -93,7 +95,7 @@ public final class SearchResultInformationPrinter {
 
 	/**
 	 * Prints a single search record.
-	 * 
+	 *
 	 * @param record The record.
 	 * @param prefix text which will be appended in front.
 	 */
@@ -104,11 +106,11 @@ public final class SearchResultInformationPrinter {
 
 	/**
 	 * Prints the search result.
-	 * 
+	 *
 	 * @param result The search result.
 	 */
 	public void printSearchResult(final Result result) {
-		LOG.info("Status: [" + result.getResultStatus() + "] (one of \'resultsFound\', \'nothingFound\', \'errorOccured\')");
+		LOG.info("Status: [" + result.getResultStatus() + "] (one of \'RESULTS_FOUND\', \'NOTHING_FOUND\', \'ERROR_OCCURED\')");
 		LOG.info("Hit count: " + result.getResultCount());
 
 		// This loop doesn't get all records. It only returns those which are present on the current page. The number of results per page can be set in the
@@ -121,14 +123,14 @@ public final class SearchResultInformationPrinter {
 
 	/**
 	 * Prints the After Search Navigation (ASN).
-	 * 
+	 *
 	 * @param result The search result.
 	 */
 	public void printAfterSearchNavigation(final Result result) {
-		LOG.info("Number of groups: " + result.getGroups().length);
+		LOG.info("Number of groups: " + result.getGroups().size());
 		for (final Group group : result.getGroups()) {
-			String groupMsg = "The group [" + group.getName() + "] contains " + group.getElements().length + " elements and is ";
-			if (group.getSelectedElements().length == 0) {
+			String groupMsg = "The group [" + group.getName() + "] contains " + group.getElements().size() + " elements and is ";
+			if (group.getSelectedElements().size() == 0) {
 				groupMsg += "not ";
 			}
 			groupMsg += "selected";
@@ -141,7 +143,7 @@ public final class SearchResultInformationPrinter {
 			// Print the group elements and mark them as selected if applicable
 			for (final GroupElement element : group.getElements()) {
 				String elementMsg = "      " + element.getName() + unit + " (" + element.getRecordCount() + ")";
-				if (element.getSelected()) {
+				if (element.isSelected()) {
 					elementMsg += " <= selected";
 				}
 				LOG.info(elementMsg);
@@ -149,7 +151,7 @@ public final class SearchResultInformationPrinter {
 		}
 	}
 
-	private StringBuilder printString2StringMap(final String2StringMapEntry[] string2StringMap) {
+	private StringBuilder printString2StringMap(final List<String2StringMapEntry> string2StringMap) {
 		final StringBuilder recordString = new StringBuilder();
 		for (final String2StringMapEntry entry : string2StringMap) {
 			if (recordString.length() > 0) {

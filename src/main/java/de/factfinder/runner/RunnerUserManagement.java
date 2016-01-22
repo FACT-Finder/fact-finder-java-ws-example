@@ -1,12 +1,22 @@
 package de.factfinder.runner;
 
-import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.UserManagementPortTypeProxy;
-import de.factfinder.wsclient.ws611.AuthenticationToken;
+import de.factfinder.adapters.wsclient.ws611.CreateGroup;
+import de.factfinder.adapters.wsclient.ws611.CreateUser;
+import de.factfinder.adapters.wsclient.ws611.DeleteGroup;
+import de.factfinder.adapters.wsclient.ws611.GetGroup;
+import de.factfinder.adapters.wsclient.ws611.GetUser;
+import de.factfinder.adapters.wsclient.ws611.GroupAlreadyExistsException;
+import de.factfinder.adapters.wsclient.ws611.GroupNotFoundException;
+import de.factfinder.adapters.wsclient.ws611.InvalidGroupException;
+import de.factfinder.adapters.wsclient.ws611.UserManagementPortType;
+import de.factfinder.runner.util.Service;
 import de.factfinder.wsclient.ws611.usermanagement.Group;
 import de.factfinder.wsclient.ws611.usermanagement.Role;
 import de.factfinder.wsclient.ws611.usermanagement.User;
@@ -15,13 +25,13 @@ import de.factfinder.wsclient.ws611.usermanagement.User;
  * This class demonstrates the use of the user management.
  */
 public final class RunnerUserManagement {
-	private static final Logger		LOG			= Logger.getLogger(RunnerUserManagement.class.getCanonicalName());
-	private static final String		GROUP_NAME	= "testgroup";
-	private static final Role[]		ROLES		= {Role.InstallManager, Role.MessagesManager};
-	private static final String		USER_NAME	= "testuser";
-	private static final String		PASSWORD	= "testpw";
-	private static final String[]	GROUP_NAMES	= {"Administrator"};
-	private static final String[]	CHANNELS	= {"de", "at"};
+	private static final Logger			LOG			= Logger.getLogger(RunnerUserManagement.class.getCanonicalName());
+	private static final String			GROUP_NAME	= "testgroup111";
+	private static final List<Role>		ROLES		= Arrays.asList(Role.INSTALL_MANAGER, Role.MESSAGES_MANAGER);
+	private static final String			USER_NAME	= "testuser1";
+	private static final String			PASSWORD	= "testpw1";
+	private static final List<String>	GROUP_NAMES	= Arrays.asList("Administrator");
+	private static final List<String>	CHANNELS	= Arrays.asList("bergfreunde-de", "bikester-at");
 
 	private RunnerUserManagement() {
 	}
@@ -41,8 +51,7 @@ public final class RunnerUserManagement {
 	 * @param endpoint The web service URL.
 	 */
 	private static void sendRequest(final String endpoint) {
-		// Timeout.setTimeoutValue(TIMEOUT);
-		final UserManagementPortTypeProxy proxy = new UserManagementPortTypeProxy(endpoint);
+		final UserManagementPortType proxy = Service.get(UserManagementPortType.class, endpoint);
 		createGroups(proxy);
 		deleteGroup(proxy);
 		createUser(proxy);
@@ -54,19 +63,19 @@ public final class RunnerUserManagement {
 	 * 
 	 * @param proxy The user management webservice.
 	 */
-	private static void createGroups(final UserManagementPortTypeProxy proxy) {
-		final AuthenticationToken token = Settings.getAuthToken();
-		try {
-			final Group group = proxy.getGroup(GROUP_NAME, token);
-			if (group == null) {
-				final Group newGroup = proxy.createGroup(GROUP_NAME, ROLES, token);
-				LOG.info("Group [name=" + newGroup.getName() + ", roles=" + Arrays.toString(newGroup.getRoles()) + "] created.");
-			} else {
-				LOG.info("Group [name=" + group.getName() + ", roles=" + Arrays.toString(group.getRoles()) + "]" + " already exists.");
-			}
+	private static void createGroups(final UserManagementPortType proxy) {
+		final CreateGroup create = new CreateGroup();
+		create.setIn0(GROUP_NAME);
+		create.setIn1(ROLES);
+		create.setIn2(Settings.getAuthToken());
 
-		} catch (final RemoteException e) {
-			LOG.error(null, e);
+		try {
+			final Group newGroup = proxy.createGroup(create).getOut();
+			LOG.info("Group [name=" + newGroup.getName() + ", roles=" + newGroup.getRoles() + "] created.");
+		} catch (final GroupAlreadyExistsException e) {
+			LOG.info("Group [name=" + GROUP_NAME + ", roles=" + ROLES + "] already exists.");
+		} catch (final InvalidGroupException e) {
+			LOG.info("Group [name=" + GROUP_NAME + ", roles=" + ROLES + "] is invalid.");
 		}
 	}
 
@@ -75,19 +84,20 @@ public final class RunnerUserManagement {
 	 * 
 	 * @param proxy The user management webservice.
 	 */
-	private static void deleteGroup(final UserManagementPortTypeProxy proxy) {
-		final AuthenticationToken token = Settings.getAuthToken();
-		try {
-			final Group group = proxy.getGroup(GROUP_NAME, token);
-			if (group == null) {
-				LOG.info("Group [name=" + GROUP_NAME + "] not deleted because it does not exist");
-			} else {
-				proxy.deleteGroup(GROUP_NAME, token);
-				LOG.info("Group [name=" + group.getName() + ", roles=" + Arrays.toString(group.getRoles()) + ']' + " deleted.");
-			}
+	private static void deleteGroup(final UserManagementPortType proxy) {
+		final GetGroup get = new GetGroup();
+		get.setIn0(GROUP_NAME);
+		get.setIn1(Settings.getAuthToken());
 
-		} catch (final RemoteException e) {
-			LOG.error(null, e);
+		final Group group = proxy.getGroup(get).getOut();
+		if (group == null) {
+			LOG.info("Group [name=" + GROUP_NAME + "] not deleted because it does not exist");
+		} else {
+			final DeleteGroup delete = new DeleteGroup();
+			delete.setIn0(GROUP_NAME);
+			delete.setIn1(Settings.getAuthToken());
+			proxy.deleteGroup(delete);
+			LOG.info("Group [name=" + group.getName() + ", roles=" + group.getRoles() + "] deleted.");
 		}
 	}
 
@@ -97,21 +107,30 @@ public final class RunnerUserManagement {
 	 * 
 	 * @param proxy The user management webservice.
 	 */
-	private static void createUser(final UserManagementPortTypeProxy proxy) {
-		final AuthenticationToken token = Settings.getAuthToken();
-		final User user;
-		try {
-			user = proxy.getUser(USER_NAME, token);
-			if (user == null) {
-				final User newUser = proxy.createUser(USER_NAME, PASSWORD, GROUP_NAMES, CHANNELS, ROLES, token);
-				LOG.info("User [name=" + newUser.getName() + ", groups=" + Arrays.toString(populateGroupsNames(newUser.getGroups())) + ", channels="
-						+ Arrays.toString(newUser.getChannels()) + ", roles=" + Arrays.toString(newUser.getRoles()) + "] created.");
-			} else {
-				LOG.info("User [name=" + user.getName() + ", groups=" + Arrays.toString(populateGroupsNames(user.getGroups())) + ", channels="
-						+ Arrays.toString(user.getChannels()) + ", roles=" + Arrays.toString(user.getRoles()) + "] already exists.");
+	private static void createUser(final UserManagementPortType proxy) {
+		final GetUser get = new GetUser();
+		get.setIn0(USER_NAME);
+		get.setIn1(Settings.getAuthToken());
+		final User user = proxy.getUser(get).getOut();
+
+		if (user == null) {
+			final CreateUser create = new CreateUser();
+			create.setIn0(USER_NAME);
+			create.setIn1(PASSWORD);
+			create.setIn2(GROUP_NAMES);
+			create.setIn3(CHANNELS);
+			create.setIn4(ROLES);
+			create.setIn5(Settings.getAuthToken());
+			try {
+				User newUser = proxy.createUser(create).getOut();
+				LOG.info("User [name=" + newUser.getName() + ", groups=" + joinGroupNames(newUser.getGroups()) + ", channels=" + newUser.getChannels()
+						+ ", roles=" + newUser.getRoles() + "] created.");
+			} catch (final GroupNotFoundException e) {
+				LOG.error(null, e);
 			}
-		} catch (final RemoteException e) {
-			LOG.error(null, e);
+		} else {
+			LOG.info("User [name=" + user.getName() + ", groups=" + joinGroupNames(user.getGroups()) + ", channels=" + user.getChannels() + ", roles="
+					+ user.getRoles() + "] already exists.");
 		}
 	}
 
@@ -120,20 +139,19 @@ public final class RunnerUserManagement {
 	 * 
 	 * @param proxy The user management webservice.
 	 */
-	private static void deleteUser(final UserManagementPortTypeProxy proxy) {
-		final AuthenticationToken token = Settings.getAuthToken();
-		try {
-			final User user = proxy.getUser(USER_NAME, token);
-			if (user == null) {
-				LOG.info("User [name=" + USER_NAME + "] not deleted because it does not exist");
-			} else {
-				proxy.deleteUser(USER_NAME, token);
-				LOG.info("User [name=" + user.getName() + ", groups=" + Arrays.toString(populateGroupsNames(user.getGroups())) + ", channels="
-						+ Arrays.toString(user.getChannels()) + ", roles=" + Arrays.toString(user.getRoles()) + "] deleted.");
-			}
-
-		} catch (final RemoteException e) {
-			LOG.error(null, e);
+	private static void deleteUser(final UserManagementPortType proxy) {
+		final GetUser get = new GetUser();
+		get.setIn0(USER_NAME);
+		get.setIn1(Settings.getAuthToken());
+		final User user = proxy.getUser(get).getOut();
+		if (user == null) {
+			LOG.info("User [name=" + USER_NAME + "] not deleted because it does not exist");
+		} else {
+			final DeleteGroup delete = new DeleteGroup();
+			delete.setIn0(GROUP_NAME);
+			delete.setIn1(Settings.getAuthToken());
+			LOG.info("User [name=" + user.getName() + ", groups=" + joinGroupNames(user.getGroups()) + ", channels=" + user.getChannels() + ", roles="
+					+ user.getRoles() + "] deleted.");
 		}
 	}
 
@@ -141,14 +159,13 @@ public final class RunnerUserManagement {
 	 * A helper method which populates the group names.
 	 * 
 	 * @param groups the groups.
-	 * @return a String[] containing the group names.
+	 * @return a String containing the group names separated with {@code ,}.
 	 */
-	private static String[] populateGroupsNames(final Group[] groups) {
-		final String[] groupNames = new String[groups.length];
-		for (int i = 0; i < groups.length; i++) {
-			groupNames[i] = groups[i].getName();
+	public static String joinGroupNames(final List<Group> groups) {
+		final List<String> names = new ArrayList<>();
+		for (final Group group : groups) {
+			names.add(group.getName());
 		}
-		return groupNames;
+		return StringUtils.join(names, ", ");
 	}
-
 }

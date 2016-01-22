@@ -1,72 +1,88 @@
 package de.factfinder.runner;
 
+import static de.factfinder.runner.util.Helper.newEntry;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.ImportPortTypeProxy;
+import de.factfinder.adapters.wsclient.ws611.DeleteRecord;
+import de.factfinder.adapters.wsclient.ws611.ImportPortType;
+import de.factfinder.adapters.wsclient.ws611.InsertRecord;
+import de.factfinder.adapters.wsclient.ws611.StartImport;
+import de.factfinder.adapters.wsclient.ws611.StartSuggestImport;
 import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
+import de.factfinder.adapters.wsclient.ws611.UpdateRecord;
+import de.factfinder.runner.util.Service;
 import de.factfinder.wsclient.ws611.AuthenticationToken;
 import de.factfinder.wsclient.ws611.indexer.ImportRecord;
 
 public class RunnerImport {
-	private static final Logger	LOG	= Logger.getLogger(RunnerImport.class.getCanonicalName());
+	private static final Logger					LOG		= Logger.getLogger(RunnerImport.class.getCanonicalName());
+	private static final String					CHANNEL	= Settings.getChannel();
+	private static final AuthenticationToken	TOKEN	= Settings.getAuthToken();
 
 	public static void main(final String[] args) {
-		sendRequest(Settings.getUrl(WebServiceUrlType.IMPORT));
+		final String endpoint = Settings.getUrl(WebServiceUrlType.IMPORT);
+		final ImportPortType proxy = Service.get(ImportPortType.class, endpoint);
+
+		ImportRecord record = new ImportRecord();
+
+		LOG.info("Insert record");
+		record.setId("123");
+		record.setRecord(getRecordForInsertion());
+		InsertRecord insert = new InsertRecord();
+		insert.setIn0(record);
+		insert.setIn1(CHANNEL);
+		insert.setIn2(false);
+		insert.setIn3(TOKEN);
+		proxy.insertRecord(insert);
+
+		LOG.info("Update record");
+		record = new ImportRecord();
+		record.setId("123");
+		record.setRecord(Arrays.asList(newEntry("Name", "New title of the product")));
+		UpdateRecord update = new UpdateRecord();
+		update.setIn0(record);
+		update.setIn1(CHANNEL);
+		update.setIn2(false);
+		update.setIn3(TOKEN);
+		proxy.updateRecord(update);
+
+		LOG.info("Delete record");
+		DeleteRecord delete = new DeleteRecord();
+		delete.setIn0("123");
+		delete.setIn1(CHANNEL);
+		delete.setIn2(false);
+		delete.setIn3(TOKEN);
+		proxy.deleteRecord(delete);
+
+		LOG.info("Start product data import");
+		StartImport startImport = new StartImport();
+		startImport.setIn0(CHANNEL);
+		startImport.setIn1(TOKEN);
+		proxy.startImport(startImport);
+
+		LOG.info("Start suggest data import");
+		StartSuggestImport startSuggestImport = new StartSuggestImport();
+		startSuggestImport.setIn0(CHANNEL);
+		startSuggestImport.setIn1(TOKEN);
+		proxy.startSuggestImport(startSuggestImport);
+
+		LOG.info("All finished successfully");
 	}
 
-	private static void sendRequest(final String endpoint) {
-		final ImportPortTypeProxy proxy = new ImportPortTypeProxy(endpoint);
-
-		try {
-			final ImportRecord importRecordUpdate = new ImportRecord();
-			final String2StringMapEntry[] mapUpdate = new String2StringMapEntry[1];
-			importRecordUpdate.setId("123");
-
-			final String2StringMapEntry entryTitelUpdate = new String2StringMapEntry();
-			entryTitelUpdate.setKey("Name");
-			entryTitelUpdate.setValue("Mustertitel");
-			mapUpdate[0] = entryTitelUpdate;
-			importRecordUpdate.setRecord(mapUpdate);
-
-			final String channel = Settings.getChannel();
-			final AuthenticationToken token = Settings.getAuthToken();
-			ImportRecord record = new ImportRecord();
-
-			LOG.info("Insert record");
-			record.setId("123");
-			record.setRecord(map(	entry("Name", "Name Of the Product"), entry("Brand", "Brand name of the product"), entry("EAN", "1234567891320"),
-									entry("ArticleNumber", "24960999"), entry("Description", "Produktbeschreibung"), entry("Price", "10")));
-			proxy.insertRecord(record, channel, false, token);
-
-			LOG.info("Update record");
-			record = new ImportRecord();
-			record.setId("123");
-			record.setRecord(map(entry("Name", "New title of the product")));
-			proxy.updateRecord(record, channel, false, token);
-
-			LOG.info("Delete record");
-			proxy.deleteRecord("123", channel, false, token);
-
-			LOG.info("Start product data import");
-			proxy.startImport(channel, token);
-
-			LOG.info("Start suggest data import");
-			proxy.startSuggestImport(channel, token);
-
-			LOG.info("All finished successfully");
-		} catch (final Exception e) {
-			LOG.error(null, e);
-		}
+	private static List<String2StringMapEntry> getRecordForInsertion() {
+		final List<String2StringMapEntry> map = new ArrayList<>();
+		map.add(newEntry("Name", "Name Of the Product"));
+		map.add(newEntry("Brand", "Brand name of the product"));
+		map.add(newEntry("EAN", "1234567891320"));
+		map.add(newEntry("ArticleNumber", "24960999"));
+		map.add(newEntry("Description", "Produktbeschreibung"));
+		map.add(newEntry("Price", "10"));
+		return map;
 	}
 
-	private static String2StringMapEntry entry(final String key, final String value) {
-		final String2StringMapEntry entryTitel = new String2StringMapEntry();
-		entryTitel.setKey(key);
-		entryTitel.setValue(value);
-		return entryTitel;
-	}
-
-	private static String2StringMapEntry[] map(final String2StringMapEntry... values) {
-		return values;
-	}
 }

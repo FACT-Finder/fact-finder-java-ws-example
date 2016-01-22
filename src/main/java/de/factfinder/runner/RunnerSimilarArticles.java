@@ -1,44 +1,51 @@
 package de.factfinder.runner;
 
-import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.SimilarProductsPortTypeProxy;
+import de.factfinder.adapters.wsclient.ws611.GetSimilarProducts;
+import de.factfinder.adapters.wsclient.ws611.SimilarProductsPortType;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
+import de.factfinder.runner.util.Service;
 import de.factfinder.wsclient.ws611.AuthenticationToken;
 import de.factfinder.wsclient.ws611.Record;
 import de.factfinder.wsclient.ws611.similarresults.SimilarRecordsResult;
 
 public class RunnerSimilarArticles {
-	private static final Logger	LOG	= Logger.getLogger(RunnerSimilarArticles.class.getCanonicalName());
+	private static final Logger					LOG		= Logger.getLogger(RunnerSimilarArticles.class.getCanonicalName());
+	private static final String					CHANNEL	= Settings.getChannel();
+	private static final AuthenticationToken	TOKEN	= Settings.getAuthToken();
 
 	public static void main(final String[] args) {
-		final SimilarProductsPortTypeProxy proxy = new SimilarProductsPortTypeProxy(Settings.getUrl(WebServiceUrlType.SIMILAR_ARTICLES));
+		final String endpoint = Settings.getUrl(WebServiceUrlType.SIMILAR_ARTICLES);
+		final SimilarProductsPortType proxy = Service.get(SimilarProductsPortType.class, endpoint);
 		final SearchResultInformationPrinter srip = new SearchResultInformationPrinter();
 
-		try {
-			final String channel = Settings.getChannel();
-			final AuthenticationToken authToken = Settings.getAuthToken();
-			final int maxArticles = 10;
-			final String recordId = "1458";
+		final int maxArticles = 10;
+		final String recordId = "1458";
 
-			LOG.info("=== BEGIN SIMILAR ARTICLES (NORMAL)===");
-			SimilarRecordsResult srr = proxy.getSimilarProducts(channel, recordId, false, maxArticles, authToken);
-			for (final Record rec : srr.getRecords()) {
-				srip.printRecord(rec, "");
-			}
-			LOG.info("=== END SIMILAR ARTICLES (NORMAL) ===");
-
-			LOG.info("=== BEGIN SIMILAR ARTICLES (IDs ONLY)===");
-			srr = proxy.getSimilarProducts(channel, recordId, true, maxArticles, authToken);
-			for (final Record rec : srr.getRecords()) {
-				srip.printRecord(rec, "");
-			}
-			LOG.info("=== END SIMILAR ARTICLES (IDs ONLY) ===");
-
-		} catch (final RemoteException e) {
-			LOG.error(null, e);
+		LOG.info("=== BEGIN SIMILAR ARTICLES (NORMAL) ===");
+		SimilarRecordsResult srr = getSimilarProducts(proxy, recordId, false, maxArticles);
+		for (final Record rec : srr.getRecords()) {
+			srip.printRecord(rec, "");
 		}
+		LOG.info("=== END SIMILAR ARTICLES (NORMAL) ===");
+
+		LOG.info("=== BEGIN SIMILAR ARTICLES (IDs ONLY) ===");
+		srr = getSimilarProducts(proxy, recordId, true, maxArticles);
+		for (final Record rec : srr.getRecords()) {
+			srip.printRecord(rec, "");
+		}
+		LOG.info("=== END SIMILAR ARTICLES (IDs ONLY) ===");
+	}
+
+	private static SimilarRecordsResult getSimilarProducts(SimilarProductsPortType proxy, String recordId, boolean idsOnly, int maxArticles) {
+		GetSimilarProducts get = new GetSimilarProducts();
+		get.setIn0(CHANNEL);
+		get.setIn1(recordId);
+		get.setIn2(idsOnly);
+		get.setIn3(maxArticles);
+		get.setIn4(TOKEN);
+		return proxy.getSimilarProducts(get).getOut();
 	}
 }

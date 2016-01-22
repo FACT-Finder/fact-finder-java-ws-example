@@ -1,12 +1,16 @@
 package de.factfinder.runner;
 
-import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.CampaignPortTypeProxy;
+import de.factfinder.adapters.wsclient.ws611.CampaignPortType;
+import de.factfinder.adapters.wsclient.ws611.GetProductCampaigns;
+import de.factfinder.adapters.wsclient.ws611.GetShoppingCartCampaigns;
 import de.factfinder.runner.print.CampaignInformationPrinter;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
+import de.factfinder.runner.util.Service;
 import de.factfinder.wsclient.ws611.AuthenticationToken;
 import de.factfinder.wsclient.ws611.campaign.Campaign;
 
@@ -14,12 +18,9 @@ import de.factfinder.wsclient.ws611.campaign.Campaign;
  * This is a example of how to use the Web-Services to access product campaigns.
  */
 public final class RunnerProductCampaign {
-	private static final String					ENDPOINT							= Settings.getUrl(WebServiceUrlType.CAMPAIGN);
-	private static final String					CHANNEL								= Settings.getChannel();
 	private static final String					PRODUCT_NUMBER						= "249602";
-	private static final String[]				SHOPPING_CART_PRODUCT_NUMBER_LIST	= {"232177", "249602"};
+	private static final List<String>			SHOPPING_CART_PRODUCT_NUMBER_LIST	= Arrays.asList("232177", "249602");
 	private static final boolean				IDS_ONLY							= false;
-	private static final AuthenticationToken	TOKEN								= Settings.getAuthToken();
 	private static final Logger					LOG									= Logger.getLogger(RunnerProductCampaign.class);
 
 	/**
@@ -30,31 +31,39 @@ public final class RunnerProductCampaign {
 
 	/**
 	 * Executes the example. Please check the correctness of the constants within this class.
-	 * 
+	 *
 	 * @param args not used.
 	 */
 	public static void main(final String[] args) {
-		final CampaignPortTypeProxy proxy = new CampaignPortTypeProxy(ENDPOINT);
+		final String endpoint = Settings.getUrl(WebServiceUrlType.CAMPAIGN);
+		final CampaignPortType proxy = Service.get(CampaignPortType.class, endpoint);
 		final SearchResultInformationPrinter searchResultInfoPrinter = new SearchResultInformationPrinter();
 		final CampaignInformationPrinter campaignInfoPrinter = new CampaignInformationPrinter(searchResultInfoPrinter);
-		try {
-			printProductCampaigns(campaignInfoPrinter, proxy);
-			printShoppingCartCampaigns(campaignInfoPrinter, proxy);
-		} catch (final RemoteException e) {
-			LOG.error(null, e);
-		}
+
+		printProductCampaigns(campaignInfoPrinter, proxy);
+		printShoppingCartCampaigns(campaignInfoPrinter, proxy);
+
 	}
 
-	private static void printProductCampaigns(final CampaignInformationPrinter campaignInfoPrinter, final CampaignPortTypeProxy proxy) throws RemoteException {
+	private static void printProductCampaigns(final CampaignInformationPrinter campaignInfoPrinter, final CampaignPortType proxy) {
 		LOG.info("Product campaigns");
-		final Campaign[] campaigns = proxy.getProductCampaigns(CHANNEL, PRODUCT_NUMBER, IDS_ONLY, TOKEN);
+		GetProductCampaigns get = new GetProductCampaigns();
+		get.setIn0(Settings.getChannel());
+		get.setIn1(PRODUCT_NUMBER);
+		get.setIn2(IDS_ONLY);
+		get.setIn3(Settings.getAuthToken());
+		final List<Campaign> campaigns = proxy.getProductCampaigns(get).getOut();
 		campaignInfoPrinter.printCampaigns(campaigns);
 	}
 
-	private static void printShoppingCartCampaigns(final CampaignInformationPrinter campaignInfoPrinter, final CampaignPortTypeProxy proxy)
-			throws RemoteException {
+	private static void printShoppingCartCampaigns(final CampaignInformationPrinter campaignInfoPrinter, final CampaignPortType proxy) {
 		LOG.info("Shopping cart campaigns");
-		final Campaign[] campaigns = proxy.getShoppingCartCampaigns(CHANNEL, SHOPPING_CART_PRODUCT_NUMBER_LIST, IDS_ONLY, TOKEN);
+		GetShoppingCartCampaigns get = new GetShoppingCartCampaigns();
+		get.setIn0(Settings.getChannel());
+		get.setIn1(SHOPPING_CART_PRODUCT_NUMBER_LIST);
+		get.setIn2(IDS_ONLY);
+		get.setIn3(Settings.getAuthToken());
+		final List<Campaign> campaigns = proxy.getShoppingCartCampaigns(get).getOut();
 		campaignInfoPrinter.printCampaigns(campaigns);
 	}
 
