@@ -7,11 +7,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.LogInformation;
-import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
-import de.factfinder.adapters.wsclient.ws611.TrackingPortType;
+import de.factfinder.adapters.wsclient.ws71.LogInformation;
+import de.factfinder.adapters.wsclient.ws71.String2StringMapEntry;
+import de.factfinder.adapters.wsclient.ws71.TrackingPortType;
 import de.factfinder.runner.util.Service;
-import de.factfinder.wsclient.ws611.AuthenticationToken;
+import de.factfinder.wsclient.ws71.AuthenticationToken;
 
 public class RunnerTrackingSCIC {
 	private static final Logger					LOG		= Logger.getLogger(RunnerTrackingSCIC.class.getCanonicalName());

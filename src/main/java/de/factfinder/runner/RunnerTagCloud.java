@@ -2,11 +2,11 @@ package de.factfinder.runner;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.GetTagCloudEntries;
-import de.factfinder.adapters.wsclient.ws611.TagcloudPortType;
+import de.factfinder.adapters.wsclient.ws71.GetTagCloudEntries;
+import de.factfinder.adapters.wsclient.ws71.TagcloudPortType;
 import de.factfinder.runner.util.Service;
-import de.factfinder.wsclient.ws611.whatshot.TagCloud;
-import de.factfinder.wsclient.ws611.whatshot.TagCloudEntry;
+import de.factfinder.wsclient.ws71.whatshot.TagCloud;
+import de.factfinder.wsclient.ws71.whatshot.TagCloudEntry;
 
 public class RunnerTagCloud {
 	private static final Logger	LOG	= Logger.getLogger(RunnerTagCloud.class.getCanonicalName());

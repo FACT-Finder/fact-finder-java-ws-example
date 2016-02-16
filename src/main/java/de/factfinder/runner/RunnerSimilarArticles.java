@@ -3,13 +3,13 @@ package de.factfinder.runner;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.GetSimilarProducts;
-import de.factfinder.adapters.wsclient.ws611.SimilarProductsPortType;
+import de.factfinder.adapters.wsclient.ws71.GetSimilarProducts;
+import de.factfinder.adapters.wsclient.ws71.SimilarProductsPortType;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
 import de.factfinder.runner.util.Service;
-import de.factfinder.wsclient.ws611.AuthenticationToken;
-import de.factfinder.wsclient.ws611.Record;
-import de.factfinder.wsclient.ws611.similarresults.SimilarRecordsResult;
+import de.factfinder.wsclient.ws71.AuthenticationToken;
+import de.factfinder.wsclient.ws71.Record;
+import de.factfinder.wsclient.ws71.similarresults.SimilarRecordsResult;
 
 public class RunnerSimilarArticles {
 	private static final Logger					LOG		= Logger.getLogger(RunnerSimilarArticles.class.getCanonicalName());

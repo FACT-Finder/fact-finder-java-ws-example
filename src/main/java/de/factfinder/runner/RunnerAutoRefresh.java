@@ -2,11 +2,11 @@ package de.factfinder.runner;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.RefreshAllDatabases;
-import de.factfinder.adapters.wsclient.ws611.RefreshDatabase;
-import de.factfinder.adapters.wsclient.ws611.RefreshDatabasesServicePortType;
-import de.factfinder.adapters.wsclient.ws611.RefreshRecommenderDatabase;
-import de.factfinder.adapters.wsclient.ws611.RefreshSuggestDatabase;
+import de.factfinder.adapters.wsclient.ws71.RefreshAllDatabases;
+import de.factfinder.adapters.wsclient.ws71.RefreshDatabase;
+import de.factfinder.adapters.wsclient.ws71.RefreshDatabasesServicePortType;
+import de.factfinder.adapters.wsclient.ws71.RefreshRecommenderDatabase;
+import de.factfinder.adapters.wsclient.ws71.RefreshSuggestDatabase;
 import de.factfinder.runner.util.Service;
 
 public class RunnerAutoRefresh {

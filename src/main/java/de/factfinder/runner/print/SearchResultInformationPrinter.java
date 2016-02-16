@@ -4,16 +4,16 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
-import de.factfinder.wsclient.ws611.Record;
-import de.factfinder.wsclient.ws611.search.Filter;
-import de.factfinder.wsclient.ws611.search.FilterValue;
-import de.factfinder.wsclient.ws611.search.Group;
-import de.factfinder.wsclient.ws611.search.GroupElement;
-import de.factfinder.wsclient.ws611.search.Params;
-import de.factfinder.wsclient.ws611.search.Result;
-import de.factfinder.wsclient.ws611.search.SearchRecord;
-import de.factfinder.wsclient.ws611.search.SortItem;
+import de.factfinder.adapters.wsclient.ws71.String2StringMapEntry;
+import de.factfinder.wsclient.ws71.Record;
+import de.factfinder.wsclient.ws71.search.Filter;
+import de.factfinder.wsclient.ws71.search.FilterValue;
+import de.factfinder.wsclient.ws71.search.Group;
+import de.factfinder.wsclient.ws71.search.GroupElement;
+import de.factfinder.wsclient.ws71.search.Params;
+import de.factfinder.wsclient.ws71.search.Result;
+import de.factfinder.wsclient.ws71.search.SearchRecord;
+import de.factfinder.wsclient.ws71.search.SortItem;
 
 /**
  * Prints information about the search result.

@@ -7,19 +7,19 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.CreateGroup;
-import de.factfinder.adapters.wsclient.ws611.CreateUser;
-import de.factfinder.adapters.wsclient.ws611.DeleteGroup;
-import de.factfinder.adapters.wsclient.ws611.GetGroup;
-import de.factfinder.adapters.wsclient.ws611.GetUser;
-import de.factfinder.adapters.wsclient.ws611.GroupAlreadyExistsException;
-import de.factfinder.adapters.wsclient.ws611.GroupNotFoundException;
-import de.factfinder.adapters.wsclient.ws611.InvalidGroupException;
-import de.factfinder.adapters.wsclient.ws611.UserManagementPortType;
+import de.factfinder.adapters.wsclient.ws71.CreateGroup;
+import de.factfinder.adapters.wsclient.ws71.CreateUser;
+import de.factfinder.adapters.wsclient.ws71.DeleteGroup;
+import de.factfinder.adapters.wsclient.ws71.GetGroup;
+import de.factfinder.adapters.wsclient.ws71.GetUser;
+import de.factfinder.adapters.wsclient.ws71.GroupAlreadyExistsException;
+import de.factfinder.adapters.wsclient.ws71.GroupNotFoundException;
+import de.factfinder.adapters.wsclient.ws71.InvalidGroupException;
+import de.factfinder.adapters.wsclient.ws71.UserManagementPortType;
 import de.factfinder.runner.util.Service;
-import de.factfinder.wsclient.ws611.usermanagement.Group;
-import de.factfinder.wsclient.ws611.usermanagement.Role;
-import de.factfinder.wsclient.ws611.usermanagement.User;
+import de.factfinder.wsclient.ws71.usermanagement.Group;
+import de.factfinder.wsclient.ws71.usermanagement.Role;
+import de.factfinder.wsclient.ws71.usermanagement.User;
 
 /**
  * This class demonstrates the use of the user management.

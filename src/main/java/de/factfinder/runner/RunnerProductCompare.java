@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.CompareRecords;
-import de.factfinder.adapters.wsclient.ws611.ProductComparisonPortType;
+import de.factfinder.adapters.wsclient.ws71.CompareRecords;
+import de.factfinder.adapters.wsclient.ws71.ProductComparisonPortType;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
 import de.factfinder.runner.util.Service;
-import de.factfinder.wsclient.ws611.AuthenticationToken;
-import de.factfinder.wsclient.ws611.Record;
-import de.factfinder.wsclient.ws611.compare.CompareAttribute;
-import de.factfinder.wsclient.ws611.compare.CompareResult;
+import de.factfinder.wsclient.ws71.AuthenticationToken;
+import de.factfinder.wsclient.ws71.Record;
+import de.factfinder.wsclient.ws71.compare.CompareAttribute;
+import de.factfinder.wsclient.ws71.compare.CompareResult;
 
 public class RunnerProductCompare {
 	private static final Logger					LOG		= Logger.getLogger(RunnerProductCompare.class.getCanonicalName());

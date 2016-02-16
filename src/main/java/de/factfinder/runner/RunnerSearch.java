@@ -5,21 +5,21 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.GetResult;
-import de.factfinder.adapters.wsclient.ws611.GetSuggestions;
-import de.factfinder.adapters.wsclient.ws611.SearchPortType;
+import de.factfinder.adapters.wsclient.ws71.GetResult;
+import de.factfinder.adapters.wsclient.ws71.GetSuggestions;
+import de.factfinder.adapters.wsclient.ws71.SearchPortType;
 import de.factfinder.runner.print.CampaignInformationPrinter;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
 import de.factfinder.runner.util.Service;
-import de.factfinder.wsclient.ws611.campaign.Campaign;
-import de.factfinder.wsclient.ws611.search.FilterValue;
-import de.factfinder.wsclient.ws611.search.FilterValueType;
-import de.factfinder.wsclient.ws611.search.Params;
-import de.factfinder.wsclient.ws611.search.Result;
-import de.factfinder.wsclient.ws611.search.SearchControlParams;
-import de.factfinder.wsclient.ws611.search.SearchResultStatus;
-import de.factfinder.wsclient.ws611.suggest.ResultSuggestion;
-import de.factfinder.wsclient.ws611.suggest.SuggestResult;
+import de.factfinder.wsclient.ws71.campaign.Campaign;
+import de.factfinder.wsclient.ws71.search.FilterValue;
+import de.factfinder.wsclient.ws71.search.FilterValueType;
+import de.factfinder.wsclient.ws71.search.Params;
+import de.factfinder.wsclient.ws71.search.Result;
+import de.factfinder.wsclient.ws71.search.SearchControlParams;
+import de.factfinder.wsclient.ws71.search.SearchResultStatus;
+import de.factfinder.wsclient.ws71.suggest.ResultSuggestion;
+import de.factfinder.wsclient.ws71.suggest.SuggestResult;
 
 /**
  * This class demonstrates the usage of the FACT-Finder web service.

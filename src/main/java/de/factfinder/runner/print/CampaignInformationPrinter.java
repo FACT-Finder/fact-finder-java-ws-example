@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.wsclient.ws611.Record;
-import de.factfinder.wsclient.ws611.campaign.Answer;
-import de.factfinder.wsclient.ws611.campaign.Campaign;
-import de.factfinder.wsclient.ws611.campaign.CampaignFlavour;
-import de.factfinder.wsclient.ws611.campaign.FeedbackText;
-import de.factfinder.wsclient.ws611.campaign.Question;
-import de.factfinder.wsclient.ws611.campaign.Target;
+import de.factfinder.wsclient.ws71.Record;
+import de.factfinder.wsclient.ws71.campaign.Answer;
+import de.factfinder.wsclient.ws71.campaign.Campaign;
+import de.factfinder.wsclient.ws71.campaign.CampaignFlavour;
+import de.factfinder.wsclient.ws71.campaign.FeedbackText;
+import de.factfinder.wsclient.ws71.campaign.Question;
+import de.factfinder.wsclient.ws71.campaign.Target;
 
 /**
  * Prints information about campaigns.

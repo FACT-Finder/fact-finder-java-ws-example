@@ -6,14 +6,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.GetRecommendation;
-import de.factfinder.adapters.wsclient.ws611.GetRecommendation1;
-import de.factfinder.adapters.wsclient.ws611.ImportData1;
-import de.factfinder.adapters.wsclient.ws611.RecommenderPortType;
+import de.factfinder.adapters.wsclient.ws71.GetRecommendation;
+import de.factfinder.adapters.wsclient.ws71.GetRecommendation1;
+import de.factfinder.adapters.wsclient.ws71.ImportData1;
+import de.factfinder.adapters.wsclient.ws71.RecommenderPortType;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
 import de.factfinder.runner.util.Service;
-import de.factfinder.wsclient.ws611.AuthenticationToken;
-import de.factfinder.wsclient.ws611.Record;
+import de.factfinder.wsclient.ws71.AuthenticationToken;
+import de.factfinder.wsclient.ws71.Record;
 
 
 public class RunnerRecommender {

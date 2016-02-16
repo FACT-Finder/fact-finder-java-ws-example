@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
-import de.factfinder.wsclient.ws611.usermanagement.Group;
+import de.factfinder.adapters.wsclient.ws71.String2StringMapEntry;
+import de.factfinder.wsclient.ws71.usermanagement.Group;
 
 /**
  * A helper for creating Entries and printing ArrayOf* types.

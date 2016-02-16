@@ -5,14 +5,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.CampaignPortType;
-import de.factfinder.adapters.wsclient.ws611.GetProductCampaigns;
-import de.factfinder.adapters.wsclient.ws611.GetShoppingCartCampaigns;
+import de.factfinder.adapters.wsclient.ws71.CampaignPortType;
+import de.factfinder.adapters.wsclient.ws71.GetProductCampaigns;
+import de.factfinder.adapters.wsclient.ws71.GetShoppingCartCampaigns;
 import de.factfinder.runner.print.CampaignInformationPrinter;
 import de.factfinder.runner.print.SearchResultInformationPrinter;
 import de.factfinder.runner.util.Service;
-import de.factfinder.wsclient.ws611.AuthenticationToken;
-import de.factfinder.wsclient.ws611.campaign.Campaign;
+import de.factfinder.wsclient.ws71.AuthenticationToken;
+import de.factfinder.wsclient.ws71.campaign.Campaign;
 
 /**
  * This is a example of how to use the Web-Services to access product campaigns.

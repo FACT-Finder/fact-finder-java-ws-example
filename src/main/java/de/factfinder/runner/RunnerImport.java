@@ -8,16 +8,16 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import de.factfinder.adapters.wsclient.ws611.DeleteRecord;
-import de.factfinder.adapters.wsclient.ws611.ImportPortType;
-import de.factfinder.adapters.wsclient.ws611.InsertRecord;
-import de.factfinder.adapters.wsclient.ws611.StartImport;
-import de.factfinder.adapters.wsclient.ws611.StartSuggestImport;
-import de.factfinder.adapters.wsclient.ws611.String2StringMapEntry;
-import de.factfinder.adapters.wsclient.ws611.UpdateRecord;
+import de.factfinder.adapters.wsclient.ws71.DeleteRecord;
+import de.factfinder.adapters.wsclient.ws71.ImportPortType;
+import de.factfinder.adapters.wsclient.ws71.InsertRecord;
+import de.factfinder.adapters.wsclient.ws71.StartImport;
+import de.factfinder.adapters.wsclient.ws71.StartSuggestImport;
+import de.factfinder.adapters.wsclient.ws71.String2StringMapEntry;
+import de.factfinder.adapters.wsclient.ws71.UpdateRecord;
 import de.factfinder.runner.util.Service;
-import de.factfinder.wsclient.ws611.AuthenticationToken;
-import de.factfinder.wsclient.ws611.indexer.ImportRecord;
+import de.factfinder.wsclient.ws71.AuthenticationToken;
+import de.factfinder.wsclient.ws71.indexer.ImportRecord;
 
 public class RunnerImport {
 	private static final Logger					LOG		= Logger.getLogger(RunnerImport.class.getCanonicalName());
